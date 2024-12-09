@@ -516,39 +516,6 @@ Yash Dave, Yash Dave official, Yash Dave website, Yash Dave portfolio, Yash Dave
 <script src="lib/owlcarousel/owl.carousel.min.js"></script>
 <script src="lib/lightbox/js/lightbox.min.js"></script>
 <script src="lib/typed/typed.min.js"></script>
-
-<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
-
-
-<!-- Initialize EmailJS -->
-<script>
-  (function() {
-    emailjs.init("OR0m-uVxTtMr5uD1c"); // Replace with your EmailJS public key
-  })();
-
-  // Form submission handler
-  document.getElementById('contactForm').addEventListener('submit', function(event) {
-    event.preventDefault();
-
-    const form = this;
-    const formData = {
-      name: form.name.value,
-      email: form.email.value,
-      subject: form.subject.value,
-      message: form.message.value
-    };
-
-    emailjs.send("service_m6ye0vq", "template_daf3pdl", formData)
-      .then(function() {
-        document.getElementById('sendmessage').style.display = 'block';
-        form.reset();
-      })
-      .catch(function(error) {
-        document.getElementById('errormessage').style.display = 'block';
-        console.error('EmailJS Error:', error);
-      });
-  });
-</script>
 <script>
   const encryptedHtml = 'ENCRYPTED_HTML_HERE'; // Encrypted HTML string
   document.body.innerHTML = atob(encryptedHtml);
