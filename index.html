@@ -17,7 +17,7 @@
   
       <meta name="keywords" content="Yash Dave, Yash Dave official, Yash Dave website, Yash Dave portfolio, Yash Dave services, Yash Dave blog, [Data analysis, Gen AI, ], [power BI ], [Tableau], [Python]">
       <meta name="keywords" content="
-Yash Dave, Yash Dave official, Yash Dave website, Yash Dave portfolio, Yash Dave data analytics, Yash Dave data analyst, Yash Dave MSc Data Analytics, Yash Dave Dublin, Yash Dave India, Yash Dave Python, Yash Dave Power BI, Yash Dave Tableau, Yash Dave SQL, Yash Dave web development, Yash Dave machine learning, Yash Dave artificial intelligence, Yash Dave React JS, Yash Dave Django, Yash Dave ETL, Yash Dave customer analytics, Yash Dave data visualization, Yash Dave urban yogi project, Yash Dave churn prediction, Yash Dave data-driven insights, Yash Dave trend analysis, Yash Dave GitHub, Yash Dave LinkedIn, Yash Dave freshdesk, Yash Dave Google Analytics, Yash Dave Power BI certification, Yash Dave Tableau dashboards, Yash Dave India to Dublin, Yash Dave big data
+Yash Dave, Yash Dave official, Yash Dave website, Yash Dave portfolio, Yash Dave data analytics, Yash Dave data analyst, Yash Dave MSc Data Analytics, Yash Dave Dublin, Yash Dave India, Yash Dave Python, Yash Dave Power BI, Yash Dave Tableau, Yash Dave SQL, Yash Dave web development, Yash Dave machine learning, Yash Dave artificial intelligence, Yash Dave React JS, Yash Dave Django, Yash Dave ETL, Yash Dave customer analytics, Yash Dave data visualization, Yash Dave urban yogi project, Yash Dave churn prediction, Yash Dave data-driven insights, Yash Dave trend analysis, Yash Dave GitHub, Yash Dave LinkedIn, Yash Dave freshdesk, Yash Dave Google Analytics, Yash Dave Power BI certification, Yash Dave Tableau dashboards, Yash Dave India to Dublin, Yash Dave big data,yashdave, yash-dave-profile,yashdaveofficial,yash rakesh dave, dave yash,daveyash,daveyashrakesh,yashdave github,yashdavelinkedin, yashreakeshdave profile, YashDave,Ysh dave,yashdaveindia, yash dave india, yash dave ireland, yashdaveireland,yashdaveindia, yashdavedublin
 " />
 
       <!-- Author: Identifies the website creator -->
@@ -132,6 +132,9 @@ Yash Dave, Yash Dave official, Yash Dave website, Yash Dave portfolio, Yash Dave
           </li>
           <li class="nav-item">
             <a class="nav-link js-scroll" href="#work">Work</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link js-scroll" href="#blog">Blog</a>
           </li>
           <li class="nav-item">
             <a class="nav-link js-scroll" href="#contact">Contact</a>
@@ -414,9 +417,8 @@ Yash Dave, Yash Dave official, Yash Dave website, Yash Dave portfolio, Yash Dave
               <div class="work-content">
                 <div class="row">
                   <div class="col-sm-8">
-                    <h2 class="w-title">Studio Lena Mado</h2>
+                    <h2 class="w-title">Learn Map</h2>
                     <div class="w-more">
-                      <span class="w-ctegory">Web Design</span>
                       <span class="w-ctegory">AIML Project</span>
                     </div>
                   </div>
@@ -439,9 +441,9 @@ Yash Dave, Yash Dave official, Yash Dave website, Yash Dave portfolio, Yash Dave
               <div class="work-content">
                 <div class="row">
                   <div class="col-sm-8">
-                    <h2 class="w-title">Studio Big Bang</h2>
+                    <h2 class="w-title">Ai In Manufacturing Industry </h2>
                     <div class="w-more">
-                      <span class="w-ctegory">Web Design</span>
+                      <span class="w-ctegory">AI/ML</span>
                     </div>
                   </div>
                   <div class="col-sm-4">
@@ -459,6 +461,22 @@ Yash Dave, Yash Dave official, Yash Dave website, Yash Dave portfolio, Yash Dave
     </div>
   </section>
   <!--/ Section Portfolio End /-->
+  <section id="blog" class="blog-mf sect-pt4 route">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="title-box text-center">
+                    <h3 class="title-a">Blog</h3>
+                    <p class="subtitle-a">Check out my latest blogs on Medium.</p>
+                    <div class="line-mf"></div>
+                </div>
+            </div>
+        </div>
+        <div class="row" id="blog-container">
+            <!-- Blog cards will be inserted here dynamically -->
+        </div>
+    </div>
+</section>
  <!--/ Section Contact-Footer Star /-->
  <section class="paralax-mf footer-paralax bg-image sect-mt4 route" style="background-image: url(img/overlay-bg.jpg)" id="contact">
   <div class="overlay-mf"></div>
@@ -504,11 +522,90 @@ Yash Dave, Yash Dave official, Yash Dave website, Yash Dave portfolio, Yash Dave
 <script src="lib/owlcarousel/owl.carousel.min.js"></script>
 <script src="lib/lightbox/js/lightbox.min.js"></script>
 <script src="lib/typed/typed.min.js"></script>
+
 <script>
-  const encryptedHtml = 'ENCRYPTED_HTML_HERE'; // Encrypted HTML string
-  document.body.innerHTML = atob(encryptedHtml);
+  async function fetchMediumBlogs() {
+      try {
+          const mediumRSSFeed = 'https://medium.com/feed/@yashdave164'; // Replace with your Medium username
+          const proxyUrl = 'https://api.allorigins.win/get?url=' + encodeURIComponent(mediumRSSFeed); // Use a CORS proxy
+          const response = await fetch(proxyUrl);
+          const data = await response.json();
+
+          const parser = new DOMParser();
+          const rss = parser.parseFromString(data.contents, "text/xml");
+          const items = rss.querySelectorAll("item");
+
+          if (!items || items.length === 0) {
+              console.error("No items found in the RSS feed.");
+              return;
+          }
+
+          const blogContainer = document.getElementById('blog-container');
+
+          items.forEach((item, index) => {
+              if (index >= 3) return; // Limit to 3 blogs
+
+              // Safely extract content with fallback values
+              const title = item.querySelector("title")?.textContent || "No title available";
+              const link = item.querySelector("link")?.textContent || "#";
+              const pubDateText = item.querySelector("pubDate")?.textContent || new Date().toISOString();
+              const description = item.querySelector("description")?.textContent || "";
+              const contentEncoded = item.querySelector("content\\:encoded")?.textContent || "";
+              const authorName = item.querySelector("dc\\:creator")?.textContent || "Yash Dave"; // Medium uses "dc:creator"
+
+              // Extract blog image dynamically from content:encoded
+              const imageMatch = contentEncoded.match(/<img[^>]+src="([^">]+)"/);
+              const blogImageUrl = imageMatch ? imageMatch[1] : ""; // If no image is found, this will be empty
+              const authorImageUrl = "img/yashdave.png"; // Use a default author image
+
+              if (!blogImageUrl) {
+                  console.warn(`No image found for blog: ${title}`);
+              }
+
+              const pubDate = new Date(pubDateText);
+
+              const card = document.createElement('div');
+              card.className = 'col-md-4';
+              card.innerHTML = `
+                  <div class="card card-blog">
+                      <div class="card-img">
+                          <a href="${link}" target="_blank"></a>
+                      </div>
+                      <div class="card-body">
+                          <div class="card-category-box">
+                              <div class="card-category">
+                                  <h6 class="category">Medium</h6>
+                              </div>
+                          </div>
+                          <h3 class="card-title"><a href="${link}" target="_blank">${title}</a></h3>
+                          <p class="card-description">
+                              ${description.slice(0, 100)}... <!-- Truncate description -->
+                          </p>
+                      </div>
+                      <div class="card-footer">
+                          <div class="post-author">
+                              <a href="${link}" target="_blank">
+                                  <img src="${authorImageUrl}" alt="Author image" class="avatar rounded-circle">
+                                  <span class="author">${authorName}</span>
+                              </a>
+                          </div>
+                          <div class="post-date">
+                              <span class="ion-ios-clock-outline"></span> ${pubDate.toDateString()}
+                          </div>
+                      </div>
+                  </div>
+              `;
+              blogContainer.appendChild(card);
+          });
+      } catch (error) {
+          console.error("Error fetching or parsing the Medium RSS feed:", error);
+      }
+  }
+
+  fetchMediumBlogs();
 </script>
-<script>
+
+<!-- <script>
   // Disable right-click
   document.addEventListener('contextmenu', (e) => e.preventDefault());
 
@@ -518,7 +615,7 @@ Yash Dave, Yash Dave official, Yash Dave website, Yash Dave portfolio, Yash Dave
       e.preventDefault();
     }
   });
-</script>
+</script> -->
 
   <script type="application/ld+json">
 {
