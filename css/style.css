@@ -388,6 +388,23 @@ a:hover {
 /*======================================
 //--//-->   NAVBAR
 ======================================*/
+.logo-container {
+  display: flex;
+  align-items: center;
+  gap: 8px; /* space between image and text */
+}
+
+.logo-icon {
+  height: 4em; /* scales with font size */
+  width: auto;
+  vertical-align: middle;
+}
+
+.logo-text {
+  font-size: 24px; /* adjust as needed */
+  font-weight: bold;
+  color: #000; /* or your brand color */
+}
 
 .navbar-b {
   transition: all .5s ease-in-out;
